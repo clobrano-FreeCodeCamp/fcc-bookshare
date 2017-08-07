@@ -1,3 +1,4 @@
+- var disabled = true;
 html
   head
     title= title
@@ -16,9 +17,14 @@ html
           a.navbar-brand(href="/") Book Share
 
         form.navbar-form.navbar-left(role="search", method="POST", action="/search")
-          .form-group
-            input.form-control(type="text", name="location", placeholder= location || "Search")
-          button.btn.btn-default(type="submit") Submit
+          if disabled
+            .form-group
+              input.form-control(type="text", name="location" disabled placeholder= location || "Search")
+            button.btn.btn-default(type="submit" disabled) Submit
+          else
+            .form-group
+              input.form-control(type="text", name="location", placeholder= location || "Search")
+            button.btn.btn-default(type="submit") Submit
 
         ul.nav.navbar-nav.navbar-right
           if loggedin

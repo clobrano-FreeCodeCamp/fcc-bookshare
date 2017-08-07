@@ -6,12 +6,32 @@ var host = 'https://openlibrary.org/'
 //var command = 'search.json?q='
 
 // https://openlibrary.org/api/books?bibkeys=ISBN:9780980200447&jscmd=data&format=json
+//
+var query = "Fantasy";
 
-var ISBN = 0761545697;
-var ISBN2 = 9780761545699;
+search(query);
+function search (query) {
+  var command = 'search.json?q=' + query + '&format=json';
+  var search = host + command;
+  console.log (search);
 
-search_by_isbn (ISBN);
-search_by_isbn (ISBN2);
+  https.get (search, res => {
+    var chunk = '';
+    res.on ('data', data => {
+      chunk += data;
+    });
+
+    res.on ('end', res => {
+      var json = JSON.parse (chunk);
+      console.log (json);
+    });
+  });
+}
+
+//var ISBN = 0761545697;
+//var ISBN2 = 9780761545699;
+//search_by_isbn (ISBN);
+//search_by_isbn (ISBN2);
 
 function search_by_isbn (isbn) {
   var command = 'api/books?bibkeys=ISBN:' + isbn + '&jscmd=data&format=json';
